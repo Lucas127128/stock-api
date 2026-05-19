@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "dev": "bun --watch ./src/server.ts",
+    "fmt": "oxfmt"
+  },
+  "dependencies": {
+    "@itick/browser-sdk": "^1.0.2",
+    "elysia": "^1.4.28"
+  },
+  "devDependencies": {
+    "oxfmt": "^0.51.0"
+  }
+}
