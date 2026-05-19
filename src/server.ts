@@ -5,7 +5,6 @@ const app = new Elysia({
   precompile: true,
   aot: true,
 })
-  // .use(openapi())
   .post(
     "/stockPrice",
     async ({ body }) => {

@@ -5,7 +5,7 @@ const options = {
   baseURL: "https://api0.itick.org",
   wssURL: "wss://api0.itick.org",
 };
-const token = process.env.ITICK_TOKEN;
+const token = Bun.env.ITICK_TOKEN;
 if (!token) throw new Error("ITICK_TOKEN not set");
 const client = new StockClient(token, options);
 
