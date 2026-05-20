@@ -1,13 +1,16 @@
-import { Elysia, t } from "elysia";
+import { Elysia, status, t } from "elysia";
 import { Service } from "./service";
+import { CloudflareAdapter } from "elysia/adapter/cloudflare-worker";
+import { env } from "cloudflare:workers";
 
-const app = new Elysia({
-  precompile: true,
-  aot: true,
-})
+const app = new Elysia({ adapter: CloudflareAdapter, aot: true })
   .post(
     "/stockPrice",
     async ({ body }) => {
+      const { success } = await env.RATE_LIMITER.limit({ key: "stockPrice" });
+      if (!success) {
+        return status(429, { message: "Too many requests" });
+      }
       const { symbol, token } = body;
       return await Service.getCurrentStockPrice(symbol, token);
     },
@@ -23,12 +26,17 @@ const app = new Elysia({
         200: t.Object({
           price: t.Readonly(t.Number()),
         }),
+        429: t.Object({
+          message: t.Readonly(t.String()),
+        }),
         502: t.Object({
           message: t.Readonly(t.String()),
         }),
       },
     },
   )
-  .listen(3000);
+  .compile();
 
 console.log(`Server is running on port ${app.server?.port}`);
+
+export default app;

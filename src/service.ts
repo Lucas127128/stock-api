@@ -1,11 +1,12 @@
 import { StockClient } from "@itick/browser-sdk";
 import { status } from "elysia";
+import { env } from "cloudflare:workers";
 
 const options = {
   baseURL: "https://api0.itick.org",
   wssURL: "wss://api0.itick.org",
 };
-const token = Bun.env.ITICK_TOKEN;
+const token = env.ITICK_TOKEN;
 if (!token) throw new Error("ITICK_TOKEN not set");
 const client = new StockClient(token, options);
 
