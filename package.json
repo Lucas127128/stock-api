@@ -1,14 +1,11 @@
 {
   "scripts": {
-    "dev": "bun --watch ./src/server.ts",
     "fmt": "oxfmt",
-    "build": "bun build ./src/server.ts --outdir ./dist --minify",
-    "start": "bun run build && bun ./dist/server.js",
     "deploy": "wrangler deploy",
-    "dev:wrangler": "wrangler dev",
-    "start:wrangler": "bun run build && wrangler dev dist/server.js"
+    "dev": "wrangler dev"
   },
   "dependencies": {
+    "@elysiajs/cors": "^1.4.2",
     "@itick/browser-sdk": "^1.0.2",
     "elysia": "^1.4.28",
     "wrangler": "^4.93.0"
